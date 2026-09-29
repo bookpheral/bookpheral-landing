@@ -12,6 +12,7 @@ const legalDocs = [
   { href: routes.terms, label: "Terms and Conditions" },
   { href: routes.privacy, label: "Privacy Policy" },
   { href: routes.refund, label: "Refund Policy" },
+  { href: routes.deleteAccount, label: "Delete Account" },
 ];
 
 function slugify(text: string): string {
@@ -79,6 +80,17 @@ function Block({ block }: { block: LegalBlock }) {
       );
     case "contact":
       return <ContactDetails channels={block.channels} />;
+    case "link":
+      return (
+        <p>
+          <Link
+            href={block.href}
+            className="inline-flex items-center gap-1.5 font-medium text-primary-500 underline decoration-primary-200 underline-offset-4 hover:decoration-primary-500"
+          >
+            {block.text}
+          </Link>
+        </p>
+      );
   }
 }
 

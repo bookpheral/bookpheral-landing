@@ -6,4 +6,7 @@ export type LegalBlock =
   /** Lettered list — rendered as a., b., c. */
   | { type: "ol"; items: string[] }
   /** Bookpheral contact details, rendered from site config. */
-  | { type: "contact"; channels: ("general" | "support")[] };
+  | { type: "contact"; channels: ("general" | "support")[] }
+  /** Standalone call-to-action link to another page on the site — `href` is
+   * a site-relative path (e.g. "/delete-account"). */
+  | { type: "link"; text: string; href: string };

@@ -3,7 +3,7 @@ import type { ComponentType } from "react";
 import { FacebookIcon, InstagramIcon, LinkedInIcon, LogoMark, XIcon } from "@/components/icons";
 import { CookieSettingsButton } from "@/components/CookieConsent";
 import { Badge, Button } from "@/components/ui";
-import { contact, launchDateLabel, routes, social } from "@/lib/site-config";
+import { contact, launchDateLabel, primaryCta, routes, signInCta, social } from "@/lib/site-config";
 
 const columns = [
   {
@@ -13,6 +13,8 @@ const columns = [
       { href: routes.services, label: "Services" },
       { href: routes.fec, label: "Founding Educators Circle" },
       { href: `${routes.contact}#faq`, label: "FAQ" },
+      // Account links only appear once the app is open to the public.
+      ...(signInCta ? [signInCta, primaryCta].map(({ href, label }) => ({ href, label })) : []),
     ],
   },
   {
@@ -21,6 +23,7 @@ const columns = [
       { href: routes.terms, label: "Terms & Conditions" },
       { href: routes.privacy, label: "Privacy Policy" },
       { href: routes.refund, label: "Refund Policy" },
+      { href: routes.deleteAccount, label: "Delete Account" },
     ],
   },
 ];
@@ -148,9 +151,14 @@ export default function Footer() {
             <p className="font-heading text-h4 text-white">Have a book or manuscript?</p>
             <p className="text-small text-ink-400">Tell us where it is today and we&apos;ll help you find the right route.</p>
           </div>
-          <Button href={`${routes.contact}#message`} variant="accent" arrow>
-            Get Started
-          </Button>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button href={primaryCta.href} variant="accent" arrow>
+              {primaryCta.label}
+            </Button>
+            <Button href={`${routes.contact}#message`} variant="inverse-outline">
+              Talk to us
+            </Button>
+          </div>
         </div>
 
         {/* Bottom row */}

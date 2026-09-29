@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import brandIcon from "@/assets/favicons/android-chrome-512x512.png";
 import {
+  APP_OPEN,
   EDUCATOR_REVENUE_SHARE,
   FEC_PRODUCTION_DISCOUNT_PERCENT,
   FEC_SEAT_LIMIT,
@@ -9,6 +10,7 @@ import {
   SITE_URL,
   contact,
   fecDeadlineLabel,
+  primaryCta,
   routes,
   social,
 } from "@/lib/site-config";
@@ -25,7 +27,7 @@ export const SITE_TAGLINE = "Protect, Publish & Profit from Your Knowledge";
 export const OG_LOCALE = "en_US";
 
 /** Date the marketing copy was last meaningfully changed — used by the sitemap. */
-export const CONTENT_LAST_MODIFIED = "2026-09-14";
+export const CONTENT_LAST_MODIFIED = "2026-09-19";
 
 export const DEFAULT_TITLE = `${SITE_NAME} — ${SITE_TAGLINE}`;
 export const DEFAULT_DESCRIPTION = `Bookpheral helps African educators professionally produce, securely distribute, and sell their books. Keep ${EDUCATOR_REVENUE_SHARE}% of net distributable revenue.`;
@@ -45,7 +47,7 @@ export const DEFAULT_KEYWORDS = [
   "anti-piracy ebook distribution",
 ];
 
-type PageKey = "home" | "about" | "services" | "fec" | "contact" | "terms" | "privacy" | "refund";
+type PageKey = "home" | "about" | "services" | "fec" | "contact" | "terms" | "privacy" | "refund" | "deleteAccount";
 
 type PageSeo = {
   /** Page title without the site suffix. `null` uses DEFAULT_TITLE as-is. */
@@ -123,6 +125,14 @@ export const pageSeo: Record<PageKey, PageSeo> = {
     path: routes.refund,
     breadcrumb: "Refund Policy",
   },
+  deleteAccount: {
+    title: "Delete Your Account",
+    description:
+      "How to delete your Bookpheral account from the app or by request, and exactly what data is deleted, what is kept, and for how long.",
+    path: routes.deleteAccount,
+    breadcrumb: "Delete Account",
+    keywords: ["delete Bookpheral account", "Bookpheral account deletion", "Bookpheral data deletion"],
+  },
 };
 
 export function absoluteUrl(path: string): string {
@@ -195,6 +205,20 @@ export function organizationJsonLd() {
   };
 }
 
+/**
+ * The site's main sign-up action, following the app-access mode: the dashboard's
+ * sign-up page when the app is open, otherwise the Founding Educators Circle
+ * registration. (Sign In has no schema.org equivalent, so it isn't listed.)
+ */
+export function registerActionJsonLd() {
+  const target = primaryCta.href.startsWith("http") ? primaryCta.href : absoluteUrl(primaryCta.href);
+  return {
+    "@type": "RegisterAction",
+    name: APP_OPEN ? "Get Started with Bookpheral" : "Join the Founding Educators Circle",
+    target: { "@type": "EntryPoint", urlTemplate: target },
+  };
+}
+
 export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -204,6 +228,7 @@ export function websiteJsonLd() {
     url: SITE_URL,
     inLanguage: "en",
     publisher: { "@id": ORGANIZATION_ID },
+    potentialAction: registerActionJsonLd(),
   };
 }
 

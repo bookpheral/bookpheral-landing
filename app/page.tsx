@@ -17,13 +17,16 @@ import {
   Text,
 } from "@/components/ui";
 import {
+  APP_OPEN,
   EDUCATOR_REVENUE_SHARE,
   FEC_PRODUCTION_DISCOUNT_PERCENT,
   FEC_SEAT_LIMIT,
   PLATFORM_REVENUE_SHARE,
   PRODUCTION_SAVING_PERCENT,
   launchDateLabel,
+  primaryCta,
   routes,
+  signInCta,
 } from "@/lib/site-config";
 
 export const metadata: Metadata = pageMetadata("home");
@@ -269,6 +272,28 @@ export default function HomePage() {
           </div>
         </Reveal>
       </Section>
+
+      {/* ─── Closing call to action (only once the app is open to the public) ── */}
+      {APP_OPEN && (
+        <Section tone="tint">
+          <Reveal className="mx-auto flex max-w-[720px] flex-col items-center gap-6 text-center">
+            <Heading size="h2">Protect, publish, and profit from your knowledge.</Heading>
+            <Text size="lg" tone="muted">
+              Bring your book to Bookpheral, or sign in to pick up where you left off.
+            </Text>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button href={primaryCta.href} size="lg" arrow>
+                {primaryCta.label}
+              </Button>
+              {signInCta && (
+                <Button href={signInCta.href} variant="secondary" size="lg">
+                  {signInCta.label}
+                </Button>
+              )}
+            </div>
+          </Reveal>
+        </Section>
+      )}
     </>
   );
 }

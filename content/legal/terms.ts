@@ -520,6 +520,15 @@ export const termsContent: LegalBlock[] = [
     "text": "Closing an account does not automatically terminate a separate Distribution Agreement or other contract unless the applicable agreement provides otherwise."
   },
   {
+    "type": "p",
+    "text": "For step-by-step instructions on requesting deletion — including how to do it from within the app, how to request it if you can no longer sign in, and what happens to your data — see the Delete Your Account page."
+  },
+  {
+    "type": "link",
+    "text": "Delete Your Account →",
+    "href": "/delete-account"
+  },
+  {
     "type": "h2",
     "text": "23. Liability"
   },

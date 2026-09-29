@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/icons";
 import { Button, cn } from "@/components/ui";
 import { EASE_OUT_QUINT } from "@/components/ui/Motion";
-import { routes } from "@/lib/site-config";
+import { primaryCta, routes, signInCta } from "@/lib/site-config";
 
 const navLinks = [
   { href: routes.about, label: "About" },
@@ -165,16 +165,15 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             {/* Wrapper handles visibility — Button's own display class would override `hidden`. */}
-            <div className="hidden sm:flex gap-3">
-              <Button href={`${routes.fec}#join`} size="sm" arrow>
-                Join the Circle
+            <div className="hidden items-center gap-2 sm:flex">
+              {signInCta && (
+                <Button href={signInCta.href} variant="ghost" size="sm">
+                  {signInCta.label}
+                </Button>
+              )}
+              <Button href={primaryCta.href} size="sm" arrow>
+                {primaryCta.label}
               </Button>
-              {/* <Button variant="ghost" href={routes.signIn} size="sm" arrow>
-                Sign In
-              </Button>
-              <Button href={routes.getStarted} size="sm" arrow>
-                Get Started
-              </Button> */}
             </div>
 
             {/* Mobile toggle */}
@@ -288,7 +287,7 @@ export default function Navbar() {
                   );
                 })}
                 <m.li
-                  className="pt-5 sm:hidden"
+                  className="flex flex-col gap-3 pt-5 sm:hidden"
                   variants={{
                     hidden: { opacity: 0, y: -6 },
                     visible: {
@@ -299,14 +298,25 @@ export default function Navbar() {
                   }}
                 >
                   <Button
-                    href={`${routes.fec}#join`}
+                    href={primaryCta.href}
                     size="lg"
                     arrow
                     onClick={close}
                     className="w-full"
                   >
-                    Join the Circle
+                    {primaryCta.label}
                   </Button>
+                  {signInCta && (
+                    <Button
+                      href={signInCta.href}
+                      variant="secondary"
+                      size="lg"
+                      onClick={close}
+                      className="w-full"
+                    >
+                      {signInCta.label}
+                    </Button>
+                  )}
                 </m.li>
               </m.ul>
             </m.div>

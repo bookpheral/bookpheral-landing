@@ -427,6 +427,15 @@ export const privacyContent: LegalBlock[] = [
     "text": "Information that no longer needs to be retained will be deleted or anonymized as appropriate."
   },
   {
+    "type": "p",
+    "text": "Deleting your account is a two-step process: your account is deactivated immediately and you're signed out everywhere, then, if you don't log back in within 30 days, your account is permanently anonymized. See the Delete Your Account page for exactly what is deleted, what is kept, and for how long."
+  },
+  {
+    "type": "link",
+    "text": "Delete Your Account →",
+    "href": "/delete-account"
+  },
+  {
     "type": "h2",
     "text": "15. Children"
   },

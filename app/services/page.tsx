@@ -18,7 +18,6 @@ import {
   Text,
 } from "@/components/ui";
 import {
-  APP_URL,
   EDUCATOR_REVENUE_SHARE,
   PLATFORM_REVENUE_SHARE,
   PRODUCTION_SAVING_PERCENT,
@@ -213,7 +212,7 @@ export default function ServicesPage() {
                   <p className="text-body text-ink-700">
                     Your underlying intellectual property remains yours.
                   </p>
-                  <Button href={`${APP_URL}/signup`} arrow>
+                  <Button href={routes.getStarted} arrow>
                     Distribute Your Book
                   </Button>
                 </div>

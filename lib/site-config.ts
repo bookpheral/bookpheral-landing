@@ -25,6 +25,15 @@ export const SITE_INDEXABLE = env(process.env.NEXT_PUBLIC_SITE_INDEXABLE, "true"
 // The dashboard app (apps/app). Used for "Distribute Your Book"-style CTAs.
 export const APP_URL = env(process.env.NEXT_PUBLIC_APP_URL, "https://app.bookpheral.com").replace(/\/$/, "");
 
+// Whether the dashboard app is open to the public.
+//   "waitlist" (default) — pre-launch: calls to action send people to the Founding Educators Circle.
+//   "open"               — the app accepts sign-ups: calls to action become Sign In / Get Started.
+// Flip this env var (and rebuild) when the app is ready; no code change needed.
+export type AppAccess = "open" | "waitlist";
+export const APP_ACCESS: AppAccess =
+  env(process.env.NEXT_PUBLIC_APP_ACCESS, "waitlist").toLowerCase() === "open" ? "open" : "waitlist";
+export const APP_OPEN = APP_ACCESS === "open";
+
 export const contact = {
   address: env(process.env.NEXT_PUBLIC_CONTACT_ADDRESS, "42 Local Airport Road, Ikeja, 100271, Lagos"),
   generalEmail: env(process.env.NEXT_PUBLIC_CONTACT_EMAIL, "info@bookpheral.com"),
@@ -111,6 +120,22 @@ export const routes = {
   terms: "/terms",
   privacy: "/privacy",
   refund: "/refund-policy",
-  signIn: "https://preview.app.bookpheral.com/signin",
-  getStarted: "https://preview.app.bookpheral.com/signup",
+  deleteAccount: "/delete-account",
+  // Dashboard app pages — always derived from NEXT_PUBLIC_APP_URL so a domain change is one env var.
+  signIn: `${APP_URL}/signin`,
+  getStarted: `${APP_URL}/signup`,
 } as const;
+
+// ─── Calls to action ────────────────────────────────────────────────────────
+// One source of truth for the site's main buttons (navbar, hero, footer, home).
+// They follow APP_ACCESS, so nothing else needs to know which mode is live.
+
+export type Cta = { label: string; href: string };
+
+/** The main call to action: Get Started when the app is open, otherwise Join the Circle. */
+export const primaryCta: Cta = APP_OPEN
+  ? { label: "Get Started", href: routes.getStarted }
+  : { label: "Join the Circle", href: `${routes.fec}#join` };
+
+/** Sign In for returning users. `null` while the app isn't open to the public. */
+export const signInCta: Cta | null = APP_OPEN ? { label: "Sign In", href: routes.signIn } : null;

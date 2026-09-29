@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import HeroImage from "@/components/HeroImage";
 import { Badge, Button, cn } from "@/components/ui";
-import { launchDateLabel, routes } from "@/lib/site-config";
+import { launchDateLabel, primaryCta, routes, signInCta } from "@/lib/site-config";
 
 const HEADLINE_LEAD = "The teacher's reward is no longer in heaven; it's now in";
 const HEADLINE_BRAND = "Bookpheral!";
@@ -80,6 +80,18 @@ export default function Hero() {
             Bookpheral is Africa&apos;s first educator-centered platform for publishing and securely distributing
             educational content.
           </p>
+        </Entrance>
+
+        {/* Main calls to action — Get Started / Sign In when the app is open, Join the Circle before that. */}
+        <Entrance at={0.35} className="mt-8 flex flex-wrap items-center gap-3">
+          <Button href={primaryCta.href} size="lg" arrow>
+            {primaryCta.label}
+          </Button>
+          {signInCta && (
+            <Button href={signInCta.href} variant="secondary" size="lg">
+              {signInCta.label}
+            </Button>
+          )}
         </Entrance>
 
         <div className="relative mt-10 motion-safe:animate-rise lg:mt-14" style={delay(0.3)}>
